@@ -209,3 +209,235 @@ function ErrorUser():never {
     throw new Error('Error de usuario')
 }
 // se usa para una función que necesitamos que entregue un error 
+
+
+//------------------------------------------------------------------------------------------------
+
+// Union Type 
+
+let puntaje: number | string = 98
+
+puntaje =  'Hola Mundo'
+
+// el union type nos permite asignarle mas de un tipo de dato a una variable 
+// lo ideal es invitarlo ya que es como asignar un any
+
+type Animal = {
+    id: number,
+    estado: string
+}
+
+type Usuario = {
+    id: number,
+    name: string
+}
+
+let animal: Usuario | Animal = { id: 1, estado: '', name: ''}
+
+// es posible pasarle las propiedades de dos tipos diferentes aun que también seria contraproducente 
+
+function sumaDos(n: number | string): number {
+    if (typeof n === 'number') {
+        return n + 2 
+    }
+    return parseInt(n) + 2
+}
+
+sumaDos('2')
+
+//--------------------------------------------------------------------------------------------------------
+
+// Intersection types
+
+type Audit = {
+    created_at: string,
+    modified_at: string
+}
+
+type Product = {
+    name: string,
+}
+
+const product: Audit & Product = {
+    created_at: '',
+    modified_at: '',
+    name: '',
+}
+
+// este tipo de dato (&) nos permite crear un objeto el cual esta obligado a contener las propiedades de los tipos de datos seleccionados
+
+//------------------------------------------------------------------------------------------------
+
+
+// Literal types 
+
+type Fibo = 0 | 1 | 2 | 3 | 5
+
+const nDeFibo: Fibo = 5 
+
+// como su nombre nos dice nos permite pasar los valores literales que puede recibir en este caso la constante
+// se recibiera por ejemplo 7, esto daría error ya que no esta asignado en el type
+
+//---------------------------------------------------------------------------------------------------------------
+
+// NUllable types
+
+function toNumber(s: string | null | undefined) {
+    if (!s) {
+        return 0
+    }
+    return parseInt(s)
+}
+
+const n = toNumber(null) 
+
+// esta es la mejor manera de poder recibir un valor undefined o null en una función
+
+//---------------------------------------------------------------------------------------------------------------
+
+// Optional chain operator 
+
+function  getUser(id: number) {
+    if (id < 0){
+        return null
+    }
+    return{
+        id: 1,
+        name: 'Felipe',
+        created_at: new Date()
+    }
+}
+
+// opción 1
+const user = getUser(1)
+console.log('usuario', user?.created_at)
+
+// opción 2
+
+const arr1 = null
+
+console.log(arr1?.[0])
+
+// opción 3
+
+const fn5:any = null
+
+console.log(fn5?.())
+
+// este operador (?) nos permite acceder a una función, array u objeto y se este devuelve undefined o null, 
+// entonces solo nos devolverá undefined y esto no provocara que la compilación  de nuestro código se detenga 
+
+//------------------------------------------------------------------------------------------------
+
+// Nullish coalescing operator 
+
+const difficulty: number | null = 0
+
+const user2 = {
+    username: 'chanchito Feliz',
+    difficulty: difficulty ?? 1
+}
+
+console.log(user2)
+
+//  este operador ?? se usa cuando el valor de un string o el valor de 0 es util para nosotros
+
+//------------------------------------------------------------------------------------------------
+
+// Type assertion 
+
+const elem: any = null
+
+const elem1 = elem as number
+
+// const input = <HTMLInputElement> document.getElementById('username')
+
+// (as) o <...> forza en este caso a la constante a ser de un tipo en especifico, pero es muy susceptible a errores 
+// debería usarse solo cuando se esta 100% seguro del tipo de dato que se va a recibir 
+
+//------------------------------------------------------------------------------------------------
+
+//Type narrowing
+
+function Lala(x: string | number) {
+    if (typeof x === 'number') {
+        x
+    }
+
+    if (typeof x === 'string') {
+        x
+    }
+}
+
+// este sirve para llevar por un camino determinado al compilador ya que con el union type introducimos varios tipos de datos
+// y con el type narrowing (que es un if en la función) le decimos al compilador cual dato elegir
+
+//--------------------------------------------------------------------------------------------------
+
+// Type unknown
+
+function procesa(algo: unknown){
+    if (typeof algo === 'number') {
+        return algo.toString()
+    }
+
+    if (typeof algo === 'string') { 
+        return algo.toUpperCase()
+    }
+
+    return 0
+
+// >>>>>>> algo.haceCosas()
+// >>>>>>> algo.otrasCosas()
+// >>>>>>> algo.genkidama()
+}
+
+// es un manera similar pero mas aceptable de usar any, ya que nos permite usarla solo se le cuestionamos el tipo de dato después
+// es por eso que genkidama daría error 
+
+//-----------------------------------------------------------------------------------------------------------
+
+// Clases 
+
+
+// las propiedades son las variables dentro de las clases 
+// los métodos son funciones dentro de las clases 
+
+
+class Personaje {     // las clases se nombran con mayúsculas 
+    id: number
+    name: string
+    nivel: number
+    hp: number
+    constructor(id: number, name: string, nivel: number, hp: number){
+        this.id = id
+        this.name = name
+        this.nivel = nivel
+        this.hp = hp
+    }
+
+    subirNivel(): number {
+        this.nivel = this.nivel ++
+        return this.nivel
+    }
+
+    cambiarHp(cantidad: number): number {
+        this.hp = this.hp + cantidad
+        return this.hp
+    }
+
+}
+
+const personaje = new Personaje(1, 'Nicolas', 1, 100)   // la clase se instancia en minúscula 
+
+personaje.cambiarHp(-10)
+
+console.log(personaje)
+
+if (typeof personaje) {
+    // esto nos devolverá object
+}
+
+if (personaje instanceof Personaje) {
+    // esto nos devolverá boolean 
+}

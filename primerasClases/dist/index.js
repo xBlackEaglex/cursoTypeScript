@@ -63,4 +63,90 @@ function validaEdad(edad, msg = 'chanchito feliz') {
 }
 const valida = validaEdad(18, 'Roberto');
 console.log(valida);
+function ErrorUser() {
+    throw new Error('Error de usuario');
+}
+let puntaje = 98;
+puntaje = 'Hola Mundo';
+let animal = { id: 1, estado: '', name: '' };
+function sumaDos(n) {
+    if (typeof n === 'number') {
+        return n + 2;
+    }
+    return parseInt(n) + 2;
+}
+sumaDos('2');
+const product = {
+    created_at: '',
+    modified_at: '',
+    name: '',
+};
+const nDeFibo = 5;
+function toNumber(s) {
+    if (!s) {
+        return 0;
+    }
+    return parseInt(s);
+}
+const n = toNumber(null);
+function getUser(id) {
+    if (id < 0) {
+        return null;
+    }
+    return {
+        id: 1,
+        name: 'Felipe',
+        created_at: new Date()
+    };
+}
+const user = getUser(1);
+console.log('usuario', user === null || user === void 0 ? void 0 : user.created_at);
+const arr1 = null;
+console.log(arr1 === null || arr1 === void 0 ? void 0 : arr1[0]);
+const fn5 = null;
+console.log(fn5 === null || fn5 === void 0 ? void 0 : fn5());
+const difficulty = 0;
+const user2 = {
+    username: 'chanchito Feliz',
+    difficulty: difficulty !== null && difficulty !== void 0 ? difficulty : 1
+};
+console.log(user2);
+const elem = null;
+const elem1 = elem;
+function Lala(x) {
+    if (typeof x === 'number') {
+        x;
+    }
+    if (typeof x === 'string') {
+        x;
+    }
+}
+function procesa(algo) {
+    if (typeof algo === 'number') {
+        return algo.toString();
+    }
+    if (typeof algo === 'string') {
+        return algo.toUpperCase();
+    }
+    return 0;
+}
+class Personaje {
+    constructor(id, name, nivel, hp) {
+        this.id = id;
+        this.name = name;
+        this.nivel = nivel;
+        this.hp = hp;
+    }
+    subirNivel() {
+        this.nivel = this.nivel++;
+        return this.nivel;
+    }
+    cambiarHp(cantidad) {
+        this.hp = this.hp + cantidad;
+        return this.hp;
+    }
+}
+const personaje = new Personaje(1, 'Nicolas', 1, 100);
+personaje.cambiarHp(-10);
+console.log(personaje);
 //# sourceMappingURL=index.js.map
