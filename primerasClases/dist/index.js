@@ -131,22 +131,38 @@ function procesa(algo) {
     return 0;
 }
 class Personaje {
-    constructor(id, name, nivel, hp) {
+    constructor(id, name, nivel, _hp) {
         this.id = id;
         this.name = name;
         this.nivel = nivel;
-        this.hp = hp;
+        this._hp = _hp;
     }
     subirNivel() {
         this.nivel = this.nivel++;
         return this.nivel;
     }
+    static agregarPersonaje() {
+        Personaje._equipo++;
+    }
     cambiarHp(cantidad) {
-        this.hp = this.hp + cantidad;
-        return this.hp;
+        this._hp = this._hp + cantidad;
+        return this._hp;
+    }
+    get hp() {
+        return this._hp;
+    }
+    static getEquipo() {
+        return Personaje._equipo;
     }
 }
+Personaje._equipo = 1;
 const personaje = new Personaje(1, 'Nicolas', 1, 100);
 personaje.cambiarHp(-10);
-console.log(personaje);
+const personaje2 = new Personaje(2, 'Chanchito', 1, 120);
+Personaje.agregarPersonaje();
+console.log(Personaje.getEquipo());
+if (typeof personaje) {
+}
+if (personaje instanceof Personaje) {
+}
 //# sourceMappingURL=index.js.map

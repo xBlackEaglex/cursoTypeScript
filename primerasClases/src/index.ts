@@ -404,16 +404,46 @@ function procesa(algo: unknown){
 // los métodos son funciones dentro de las clases 
 
 
-class Personaje {     // las clases se nombran con mayúsculas 
-    id: number
-    name: string
-    nivel: number
-    hp: number
-    constructor(id: number, name: string, nivel: number, hp: number){
-        this.id = id
-        this.name = name
-        this.nivel = nivel
-        this.hp = hp
+// class Personaje {     // las clases se nombran con mayúsculas 
+//     readonly id: number  // readonly vuele la propiedad de solo lectura 
+//     name: string
+//     nivel: number
+//     private _hp: number  // private vuele privada la propiedad evitando su acceso fuera de la clase
+//     // se usa _ al inicio de el nombre de la propiedad privada 
+//     profesion?: string  // con el ? podemos hacer uso de la propiedad en un futuro
+//     constructor(id: number, name: string, nivel: number, hp: number){
+//         this.id = id
+//         this.name = name
+//         this.nivel = nivel
+//         this._hp = hp
+//     }
+
+//     subirNivel(): number {
+//         this.nivel = this.nivel ++
+//         return this.nivel
+//     }
+
+//     cambiarHp(cantidad: number): number {
+//         this._hp = this._hp + cantidad
+//         // no pasarse del máximo 
+//         return this._hp
+//     }
+
+// }
+
+// de la manera anterior se pueden crear clases, pero existe una mejor opción 
+
+
+class Personaje {   // las clases se nombran con mayúsculas 
+    profesion?: string  // con el ? podemos hacer uso de la propiedad en un futuro
+    // profeson se deja fuera del constructor por no tener un valor inicial  
+    private static _equipo: number = 1
+    constructor(
+        public readonly id: number, 
+        public name: string, 
+        public nivel: number, 
+        private _hp: number){    // private vuele privada la propiedad evitando su acceso fuera de la clase
+            // se usa _ al inicio de el nombre de la propiedad privada 
     }
 
     subirNivel(): number {
@@ -421,18 +451,48 @@ class Personaje {     // las clases se nombran con mayúsculas
         return this.nivel
     }
 
+    static agregarPersonaje(): void {
+        Personaje._equipo ++  // Personaje es la clase (esta en mayúsculas)
+    }
+
     cambiarHp(cantidad: number): number {
-        this.hp = this.hp + cantidad
-        return this.hp
+        this._hp = this._hp + cantidad
+        // no pasarse del máximo 
+        return this._hp
+    }
+
+
+    get hp(): number {
+        return this._hp
+    }
+
+    // set hp(cantidad: number) {
+    //     this._hp = this._hp + cantidad     >>>>> los set se usan para cambiar el valor de una propiedad al estar fuera de la clase 
+    // }
+
+    static getEquipo(): number {
+        return Personaje._equipo
     }
 
 }
 
+
+
+
+
 const personaje = new Personaje(1, 'Nicolas', 1, 100)   // la clase se instancia en minúscula 
 
 personaje.cambiarHp(-10)
+// console.log(personaje)
 
-console.log(personaje)
+
+const personaje2 = new Personaje(2, 'Chanchito', 1, 120)
+Personaje.agregarPersonaje()   // estoy cambiando desde la clase (la 'p' es mayúscula)
+
+console.log(Personaje.getEquipo())
+
+
+
 
 if (typeof personaje) {
     // esto nos devolverá object
@@ -441,3 +501,5 @@ if (typeof personaje) {
 if (personaje instanceof Personaje) {
     // esto nos devolverá boolean 
 }
+
+//--------------------------------------------------------------------------------------------------------------------
