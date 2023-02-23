@@ -16,17 +16,23 @@
  * created_by
  */
 
-class DatosBasicos{
+abstract class DatosBasicos{
     constructor(
         public name: string,
         public desc: string,
-        public created_at: Date,
-        public created_by: number,
+        protected created_at: Date,
+        protected created_by: number,
     ) {}
 
     get fullYear(){ 
         return this.created_at.getFullYear();
     }
+
+    get fullDesc() {
+        return this.name + ' - ' + this.desc
+    }
+
+    abstract guardar():void; 
 }
 
 
@@ -42,6 +48,15 @@ class Producto extends DatosBasicos{
         ) {
             super(name, desc, created_at, created_by)
         }
+
+        override get fullDesc(){
+            return 'Producto: ' + super.fullDesc
+        }
+
+        guardar(){
+            console.log('Guardando Producto...')
+        }
+
 }
 
 
@@ -59,6 +74,14 @@ class Categoria extends DatosBasicos{
 
         agregarProducto(producto: Producto){
             this.productos.push(producto)
+        }
+
+        override get fullDesc(){
+            return 'Categoria: ' + super.fullDesc
+        }
+
+        guardar(){
+            console.log('Guardando Categoria...')
         }
 }
 
@@ -83,4 +106,4 @@ let categoria1 = new Categoria(
 )
 
 categoria1.agregarProducto (producto1)
-console.log(producto1, categoria1)
+console.log(producto1.fullDesc)
